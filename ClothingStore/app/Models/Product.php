@@ -25,8 +25,11 @@ class Product extends Model
     public function getImageUrlAttribute()
     {
         if ($this->image) {
-            return asset('storage/' . $this->image);
+            // Ensure the path is correct and the file exists
+            $path = 'storage/' . $this->image;
+            return asset($path);
         }
-        return asset('images/no-image.png');
+        // Use a default product image as fallback
+        return asset('img/product/product-1.jpg');
     }
 } 

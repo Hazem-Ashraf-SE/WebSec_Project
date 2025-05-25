@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Edit Product') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('products.update', $product->id) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ auth()->user()->hasRole('admin') ? route('admin.products.update', $product->id) : route('products.update', $product->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -69,7 +69,7 @@
                             <button type="submit" class="btn btn-primary">
                                 {{ __('Update Product') }}
                             </button>
-                            <a href="{{ route('products.index') }}" class="btn btn-secondary">
+                            <a href="{{ auth()->user()->hasRole('admin') ? route('admin.products.index') : route('products.index') }}" class="btn btn-secondary">
                                 {{ __('Cancel') }}
                             </a>
                         </div>

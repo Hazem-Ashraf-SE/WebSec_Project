@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Add New Product') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ auth()->user()->hasRole('admin') ? route('admin.products.store') : route('products.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="mb-3">
@@ -82,7 +82,7 @@
                             <button type="submit" class="btn btn-primary">
                                 {{ __('Add Product') }}
                             </button>
-                            <a href="{{ route('products.index') }}" class="btn btn-secondary">
+                            <a href="{{ auth()->user()->hasRole('admin') ? route('admin.products.index') : route('products.index') }}" class="btn btn-secondary">
                                 {{ __('Cancel') }}
                             </a>
                         </div>

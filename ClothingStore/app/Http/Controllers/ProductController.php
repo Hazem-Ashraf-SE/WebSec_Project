@@ -9,16 +9,22 @@ class ProductController extends Controller
 {
     public function index()
     {
-        if (!auth()->user() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager'))) {
+        // Check if user is authenticated and has proper role
+        // Skip the role check if accessing through admin routes
+        if (request()->route()->getPrefix() !== 'admin' && 
+            (!auth()->user() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager')))) {
             abort(403, 'Unauthorized');
         }
+        
         $products = Product::paginate(10);
         return view('products.index', compact('products'));
     }
 
     public function create()
     {
-        if (!auth()->user() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager'))) {
+        // Skip the role check if accessing through admin routes
+        if (request()->route()->getPrefix() !== 'admin' && 
+            (!auth()->user() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager')))) {
             abort(403, 'Unauthorized');
         }
         return view('products.create');
@@ -26,7 +32,9 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        if (!auth()->user() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager'))) {
+        // Skip the role check if accessing through admin routes
+        if (request()->route()->getPrefix() !== 'admin' && 
+            (!auth()->user() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager')))) {
             abort(403, 'Unauthorized');
         }
         $validated = $request->validate([
@@ -63,7 +71,9 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        if (!auth()->user() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager'))) {
+        // Skip the role check if accessing through admin routes
+        if (request()->route()->getPrefix() !== 'admin' && 
+            (!auth()->user() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager')))) {
             abort(403, 'Unauthorized');
         }
         return view('products.edit', compact('product'));
@@ -71,7 +81,9 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        if (!auth()->user() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager'))) {
+        // Skip the role check if accessing through admin routes
+        if (request()->route()->getPrefix() !== 'admin' && 
+            (!auth()->user() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager')))) {
             abort(403, 'Unauthorized');
         }
         $validated = $request->validate([
@@ -102,7 +114,9 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        if (!auth()->user() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager'))) {
+        // Skip the role check if accessing through admin routes
+        if (request()->route()->getPrefix() !== 'admin' && 
+            (!auth()->user() || (!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager')))) {
             abort(403, 'Unauthorized');
         }
         $product->delete();
